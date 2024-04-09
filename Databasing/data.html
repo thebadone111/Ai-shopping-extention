@@ -1,0 +1,121 @@
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  <h2>Data from database - Amazon Ai search</h2>
+  <div class="data-container">
+    <h3 class="data-header">Data: </h3>
+    <p class="data-text">Daily queries: {{ header_data["daily"] }}</p>
+    <p class="data-text">Monthly queries: {{ header_data["monthly"] }}</p>
+   <!--<p class="data-text">% of repeat users: </p>--> 
+  </div>
+
+  <!--
+    {% for row in data %}
+      <tr class="table-text">
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+        <td>{{ row[5] }}</td>
+        <td>{{ row[6] }}</td>
+        <td>{{ row[7] }}</td>
+      </tr>
+    {% endfor %}
+  -->
+  <div class="grid-container">
+    {% for row in data %}
+    <div class="box">
+      <button type="button" class="collapsible">ID: {{ row[0] }}</button>
+      <div class="content">
+
+        <button type="button" class="collapsible">IDENTIFIER:</button>
+        <div class="content">
+          <p>{{ row[1] }}</p>
+        </div>
+
+        <button type="button" class="collapsible">PROMPT:</button>
+        <div class="content">
+          <p>{{ row[2] }}</p>
+        </div>
+
+        <button type="button" class="collapsible">TIME:</button>
+        <div class="content">
+          <p>{{ row[3] }}</p>
+        </div>
+
+        <button type="button" class="collapsible">PRODUCTS:</button>
+        <div class="content">
+          <ul>
+            {% for product in row[4].split(",") %}
+            <li>
+              {{ product }}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <button type="button" class="collapsible">LINKS:</button>
+        <div class="content">
+          <ul>
+            {% for link in row[5].split(",") %}
+            <li>
+              <a href="{{ link }}">{{ link }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <button type="button" class="collapsible">PRICES:</button>
+        <div class="content">
+          <ul>
+            {% for price in row[6].split(",") %}
+            <li>
+              {{ price }}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <button type="button" class="collapsible">RECOMMENDATION:</button>
+        <div class="content">
+          <ul>
+            {% for text in row[4].split(",") %}
+            <li>
+              {{ text }}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+  </script>
+
+
+  <a href="{{ url_for('logout') }}" class="footer-link">Logout</a>
+  <a href="{{ url_for('data') }}" class="footer-link">Refresh</a>
+</body>
+
+</html>

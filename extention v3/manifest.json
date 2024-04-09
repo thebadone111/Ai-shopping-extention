@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "Amazon Search API Extension",
+  "version": "1.0",
+  "description": "An extension that sends Amazon search queries to an API and displays the results",
+  "icons": {
+    "16": "images/button-img.png"
+  },
+  "host_permissions": [
+    "https://www.amazon.com/*",
+    "https://arelatia-eu.com/*",
+    "*://*/"
+  ],
+  "permissions": ["activeTab", "scripting", "cookies", "tabs"],
+  "background": {
+    "service_worker": "background.js"
+    },
+  "action": {
+    "title": {"message": "Amazon Search API Extension"},
+    "icon": "images/button-img.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "content.js"
+      ], 
+      "matches": [
+        "https://www.amazon.com/*",
+        "https://arelatia-eu.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "middle/*",
+        "styles.css"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.amazon.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}
